@@ -4,9 +4,8 @@ const CACHE_NAME = "meteo-pwa-v1";
 const ASSETS = [
   "/",
   "/index.html",
-  "/style.css",
-  "/app.js",
-  "/manifest.json",
+  "/manifest.webmanifest",
+  "/vite.svg",
   "/icons/icon-72.png",
   "/icons/icon-96.png",
   "/icons/icon-128.png",
