@@ -302,13 +302,16 @@ function App() {
       if ('serviceWorker' in navigator) {
         const registration = await navigator.serviceWorker.ready
         await registration.showNotification(title, options)
-        return
       }
     } catch (error) {
       console.warn('[PWA] showNotification fallback', error)
+    } finally {
+      try {
+        new Notification(title, options)
+      } catch (error) {
+        console.warn('[PWA] Direct notification failed', error)
+      }
     }
-
-    new Notification(title, options)
   }, [])
 
   const checkAlerts = useCallback(
@@ -368,6 +371,14 @@ function App() {
         )
         setWeather(weatherResponse)
         setLastUpdated(new Date())
+        void sendWeatherNotification(
+          `Meteo actualisee - ${location.name}`,
+          `Actuellement ${Math.round(
+            weatherResponse.current.temperature_2m,
+          )}\u00B0C avec un vent de ${Math.round(
+            weatherResponse.current.wind_speed_10m,
+          )} km/h.`,
+        )
         checkAlerts(weatherResponse, location.name)
       } catch (err) {
         setWeather(null)

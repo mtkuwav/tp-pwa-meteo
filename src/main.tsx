@@ -10,11 +10,11 @@ createRoot(document.getElementById('root')!).render(
 )
 
 if ('serviceWorker' in navigator) {
-  const swUrl = new URL('./service-worker.js', import.meta.url)
+  const swUrl = `${import.meta.env.BASE_URL}service-worker.js`
 
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register(swUrl, { type: 'module' })
+      .register(swUrl)
       .then((registration) => {
         console.info('[PWA] Service worker ready:', registration.scope)
       })
